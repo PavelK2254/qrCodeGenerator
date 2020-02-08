@@ -44,10 +44,16 @@ import {
   MatTooltipModule,
 } from '@angular/material';
 
+import { QRCodeModule } from 'angularx-qrcode';
+import { QrControllerComponent } from './qr-controller/qr-controller.component';
+import { QrModelComponent } from './qr-model/qr-model.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    GeneratorComponent
+    GeneratorComponent,
+    QrControllerComponent,
+    QrModelComponent
   ],
   imports: [
     BrowserModule,
@@ -89,7 +95,8 @@ import {
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    QRCodeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

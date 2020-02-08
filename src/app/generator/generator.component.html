@@ -1,22 +1,48 @@
-<p>
-  generator works!
-</p>
-<mat-card class="example-card">
-  <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>Shiba Inu</mat-card-title>
-    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-  </mat-card-header>
-  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-  <mat-card-content>
-    <p>
-      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-      bred for hunting.
-    </p>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
-  </mat-card-actions>
+<mat-card class="generator-card">
+<form class="form-container">
+
+  <mat-radio-group (change)="radioChange($event)" aria-labelledby="example-radio-group-label" class="example-radio-group">
+    <mat-radio-button *ngFor="let option of buttonOptions" class="example-radio-button" [value]="option" >
+    {{option}}
+    </mat-radio-button>
+
+  </mat-radio-group>
+
+  <mat-form-field>
+    <input #serialNumber (keyup)="this.singleSerialNumber = serialNumber.value" [disabled]="!isSingle" id="serialNumber" class="singleField" matInput placeholder="Serial number" maxlength="5">
+  </mat-form-field>
+  <p></p>
+  <mat-form-field >
+    <input #fromField (keyup)="this.range.from = fromField.value" [disabled]="isSingle" id=fromField class="multipleField"  matInput placeholder="From" maxlength="5">
+  </mat-form-field>
+  <label>Range</label>
+  <mat-form-field >
+    <input #toField (keyup)="this.range.to = toField.value" [disabled]="isSingle" id="toField" class="multipleField"  matInput placeholder="To" maxlength="5">
+  </mat-form-field>
+</form>
+
+<div class="button-container">
+  <button mat-flat-button color="primary" (click)="generateQRCodes($event)">Generate</button>
+  <button style="margin-top: 5%;" mat-flat-button color="accent">Export</button>
+</div>
 </mat-card>
+<div class="previewSection">
+  <p>Preview</p>
+  <mat-grid-list cols="5" rowHeight="1:1" #qrHolder id="qrHolder" class="qrHolder">
+
+  <mat-grid-tile *ngFor="let qrItem of qrCodes">
+  <mat-card  class="qrItem">
+    <qrcode  [qrdata]="qrItem" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+    <label >{{qrItem}}</label>
+    </mat-card>
+  </mat-grid-tile>
+
+  </mat-grid-list>
+
+
+
+
+
+
+
+</div>
