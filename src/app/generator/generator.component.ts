@@ -1,15 +1,11 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef, ComponentFactory, Directive } from '@angular/core';
-import { QrModelComponent } from '../qr-model/qr-model.component';
-
+import { Component, OnInit } from '@angular/core';
+import { MatRadioChange } from '@angular/material'
 @Component({
   selector: 'app-generator',
   templateUrl: './generator.component.html',
   styleUrls: ['./generator.component.css']
 })
 
-@Directive({
-  selector: '[qrHolder]'
-})
 
 export class GeneratorComponent implements OnInit {
 
@@ -24,16 +20,15 @@ export class GeneratorComponent implements OnInit {
 
   qrCodes: Array<String> = [];
 
-  radioChange(event) {
+  radioChange(event:MatRadioChange) {
     if(event.value == "Single"){
       this.isSingle = true
     }else{
     this.isSingle   = false
     }
-    console.log(`Is single: ${this.isSingle}`)
   }
 
-  generateQRCodes(event) {
+  generateQRCodes() {
     this.qrCodes = []
     if (this.isSingle) {
       this.qrCodes.push(this.singleSerialNumber)
@@ -49,7 +44,7 @@ export class GeneratorComponent implements OnInit {
 
   }
 
-  constructor(public viewContainerRef: ViewContainerRef) {
+  constructor() {
   }
 
   ngOnInit() {

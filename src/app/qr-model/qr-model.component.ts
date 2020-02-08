@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild,AfterViewInit } from '@angular/core';
+import { Component, OnInit,AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-qr-model',
@@ -7,10 +7,10 @@ import { Component, OnInit,ViewChild,AfterViewInit } from '@angular/core';
 })
 export class QrModelComponent implements OnInit,AfterViewInit {
 
-  @ViewChild('qrItem',{static:false}) qrItem;
+
 
   ngAfterViewInit(): void {
-    console.log(this.qrItem)
+
   }
 
 
