@@ -1,41 +1,48 @@
 <mat-card class="generator-card">
-<form class="form-container">
+  <form class="form-container">
 
-  <mat-radio-group (change)="radioChange($event)" aria-labelledby="example-radio-group-label" class="example-radio-group">
-    <mat-radio-button *ngFor="let option of buttonOptions" class="example-radio-button" [value]="option" >
-    {{option}}
-    </mat-radio-button>
+    <mat-radio-group (change)="radioChange($event)" aria-labelledby="example-radio-group-label" class="example-radio-group">
+      <mat-radio-button *ngFor="let option of buttonOptions" class="example-radio-button" [value]="option" [checked]="option == 'Single'">
+        {{option}}
+      </mat-radio-button>
 
-  </mat-radio-group>
+    </mat-radio-group>
 
-  <mat-form-field>
-    <input #serialNumber (keyup)="this.singleSerialNumber = serialNumber.value" [disabled]="!isSingle" id="serialNumber" class="singleField" matInput placeholder="Serial number" maxlength="5">
-  </mat-form-field>
-  <p></p>
-  <mat-form-field >
-    <input #fromField (keyup)="this.range.from = fromField.value" [disabled]="isSingle" id=fromField class="multipleField"  matInput placeholder="From" maxlength="5">
-  </mat-form-field>
-  <label>Range</label>
-  <mat-form-field >
-    <input #toField (keyup)="this.range.to = toField.value" [disabled]="isSingle" id="toField" class="multipleField"  matInput placeholder="To" maxlength="5">
-  </mat-form-field>
-</form>
+    <mat-form-field>
+      <input min="0" required max="99999" type="number" #serialNumber (change)="this.singleSerialNumber = serialNumber.value" [disabled]="!isSingle" id="serialNumber" class="singleField" matInput placeholder="Serial number" maxlength="5">
+    </mat-form-field>
+    <p></p>
+    <mat-form-field>
+      <input required min="0" max="99999" type="number" #fromField (change)="this.range.from = fromField.value" [disabled]="isSingle" id=fromField class="multipleField" matInput placeholder="From" maxlength="5">
+    </mat-form-field>
+    <label>Range</label>
+    <mat-form-field>
+      <input required min="0" max="99999" type="number" #toField (change)="this.range.to = toField.value" [disabled]="isSingle" id="toField" class="multipleField" matInput placeholder="To" maxlength="5">
+    </mat-form-field>
+  </form>
 
-<div class="button-container">
-  <button mat-flat-button color="primary" (click)="generateQRCodes($event)">Generate</button>
-  <button style="margin-top: 5%;" mat-flat-button color="accent">Export</button>
-</div>
+  <div class="button-container">
+    <button mat-flat-button color="primary" (click)="generateQRCodes($event)">Generate</button>
+    <button style="margin-top:5%" mat-flat-button color="accent" [matMenuTriggerFor]="menu">Export</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Excel</button>
+      <button mat-menu-item>Database</button>
+    </mat-menu>
+  </div>
 </mat-card>
 <div class="previewSection">
   <p>Preview</p>
   <mat-grid-list cols="5" rowHeight="1:1" #qrHolder id="qrHolder" class="qrHolder">
 
-  <mat-grid-tile *ngFor="let qrItem of qrCodes">
-  <mat-card  class="qrItem">
-    <qrcode  [qrdata]="qrItem" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
-    <label >{{qrItem}}</label>
-    </mat-card>
-  </mat-grid-tile>
+    <mat-grid-tile *ngFor="let qrItem of qrCodes">
+      <mat-card class="qrItem">
+        <button (click)="qrCodes.splice(qrCodes.indexOf(qrItem),1)" mat-icon-button aria-label="Remove button" color="primary">
+          <mat-icon>close</mat-icon>
+        </button>
+        <qrcode [qrdata]="qrItem" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+        <label>{{qrItem}}</label>
+      </mat-card>
+    </mat-grid-tile>
 
   </mat-grid-list>
 
